@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to jinja2</title>
+</head>
+<body>
+    <h1>Welcome to my task manager:</h1>
+    <h2>Dashboard</h2>
+    <p>Total tasks:{{total_tasks}}</p>
+    <p>Completed tasks:{{completed_tasks}}</p>
+    <p>Total tasks:{{pending_tasks}}</p>
+    {% for task in tasks%}
+    <p>
+        {{task.id}}
+        {{task.title}}
+        {%if task.status=="Completed"%}
+        [Completed]
+        {%else%}
+        [Pending]
+        {%endif%}
+    </p>
+
+    {% else %}
+
+        <p>No tasks found!</p>
+
+    {% endfor %}
+
+</body>
+</html>

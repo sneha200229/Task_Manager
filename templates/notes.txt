@@ -1,0 +1,70 @@
+display_tasks is a function parameter. It receives whichever list you want to display.
+Example A: When you visit /
+@app.route("/")def home():    return render_task_page(tasks)
+
+Here, you're passing the entire tasks list.
+
+Python effectively understands this as:
+display_tasks = tasks
+
+
+
+So the function displays all four tasks.
+
+Example B: When you visit /tasks?status=Pending
+@app.route("/tasks")def show_tasks():    status = request.args.get("status")    if status:        filtered_tasks = [            task for task in tasks            if task["status"].lower() == status.lower()        ]        return render_task_page(filtered_tasks)    return render_task_page(tasks)
+
+
+
+Here, you pass filtered_tasks instead.
+
+Python effectively understands:
+display_tasks = filtered_tasks
+
+
+
+So only the two pending tasks are displayed.
+
+Visualise the flow:
+Original tasks list
+4 tasks
+2 Completed + 2 Pending
+
+Home route /
+
+render_task_page(tasks)
+4
+All tasks displayed
+
+
+Pending route
+
+render_task_page(filtered_tasks)
+2
+Pending tasks displayed
+
+
+
+Both routes call the same helper function, but pass different lists.
+
+One important detail: your current helper calculates the dashboard counts using the original global tasks list, not display_tasks.
+
+That means even when you filter for Pending tasks, the dashboard still shows:
+- Total Tasks: 4
+- Completed Tasks: 2
+- Pending Tasks: 2
+Only the displayed task list changes.
+
+Also, this line:
+tasks=display_tasks
+
+
+
+is slightly different from passing an argument to your Python function.
+
+Here, you're passing a variable named tasks to the HTML template, and its value comes from display_tasks.
+
+That's why your HTML can use:
+{% for task in tasks %}
+    {{ task.title }}
+{% endfor %}
