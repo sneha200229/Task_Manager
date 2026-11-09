@@ -1,32 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to jinja2</title>
-</head>
-<body>
-    <h1>Welcome to my task manager:</h1>
+{% extends "base.html" %}
+
+    {%block content%}
+     <h1>Welcome to my task manager home page:</h1>
     <h2>Dashboard</h2>
-    <p>Total tasks:{{total_tasks}}</p>
-    <p>Completed tasks:{{completed_tasks}}</p>
-    <p>Total tasks:{{pending_tasks}}</p>
+    <div class="card">
+    <h3>Total Tasks</h3>
+    <p>{{ total_tasks }}</p>
+</div>
+
+<div class="card">
+    <h3>Completed Tasks</h3>
+    <p>{{ completed_tasks }}</p>
+</div>
+
+<div class="card">
+    <h3>Pending Tasks</h3>
+    <p>{{ pending_tasks }}</p>
+</div>
     {% for task in tasks%}
     <p>
-        {{task.id}}
-        {{task.title}}
+        {{task.id}}){{task.title}}
         {%if task.status=="Completed"%}
         [Completed]
         {%else%}
         [Pending]
         {%endif%}
     </p>
-
     {% else %}
 
         <p>No tasks found!</p>
 
     {% endfor %}
 
-</body>
-</html>
+    {% endblock %}
+   

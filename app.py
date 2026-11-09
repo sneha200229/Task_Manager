@@ -36,18 +36,18 @@ app=Flask(__name__)
 
 
 
-def show_data(display_tasks):
+def show_data(template_name,display_tasks):
     total_tasks=len(tasks)
     completed_tasks=sum(1 for task in tasks if task["status"]=="Completed")
     pending_tasks=sum(1 for task in tasks if task["status"]=="Pending")
     
-    return render_template("index.html",tasks=display_tasks,total_tasks=total_tasks,completed_tasks=completed_tasks,pending_tasks=pending_tasks)
+    return render_template(template_name,tasks=display_tasks,total_tasks=total_tasks,completed_tasks=completed_tasks,pending_tasks=pending_tasks)
     
 
 
 @app.route("/")
 def home():
-    return show_data(tasks)
+    return show_data("index.html",tasks)
 
 @app.route("/tasks")
 def show_tasks():
@@ -57,14 +57,15 @@ def show_tasks():
         for task in tasks:
             if task["status"].lower()==status.lower():
                 filtered_tasks.append(task)
-        return show_data(filtered_tasks)
-    return show_data(tasks)
+        return show_data("tasks.html",filtered_tasks)
+    return show_data("tasks.html",tasks)
 
 @app.route("/tasks/<int:id>")
+
 def show_task_byid(id):
     for task in tasks:
         if task["id"]==id:
-            return f"Dtails are:{task}"
+            return render_template("task_detail.html", task=task)
     return "Task not found", 404
 
 
