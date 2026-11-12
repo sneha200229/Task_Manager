@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request,url_for, flash,redirect
 
 
 tasks=[
@@ -33,6 +33,7 @@ tasks=[
     
 ]
 app=Flask(__name__)
+app.secret_key="my-task-manager-secret"
 
 
 
@@ -61,7 +62,6 @@ def show_tasks():
     return show_data("tasks.html",tasks)
 
 @app.route("/tasks/<int:id>")
-
 def show_task_byid(id):
     for task in tasks:
         if task["id"]==id:
@@ -69,6 +69,26 @@ def show_task_byid(id):
     return "Task not found", 404
 
 
+#route to add new task
+@app.route("/tasks/add",methods=["GET","POST"])
+def taskadd():
+    if request.method=="POST":
+        title=request.form.get("title")
+        desc=request.form.get("description")
+        status=request.form.get("status")
+        priority=request.form.get("priority")
+        new_id=max((task["id"] for task in tasks), default=0)+1
+        new_task={
+        "id":new_id,
+        "title":title,
+        "description":desc,
+        "status":status,
+        "priority":priority
+        }
+        tasks.append(new_task)
+        flash("Task added succesffully!")
+        return redirect(url_for("show_tasks"))
+    return render_template("add_task.html")
 
 if __name__=="__main__":
     app.run(debug=True,port=5002)

@@ -9,7 +9,13 @@
 
     <p>{{ task.description }}</p>
 
-    <p>Status: {{ task.status }}</p>
+    {% if task.status=="Completed"%}
+    <p class="status">Status: {{ task.status }}</p>
+    {% else %}
+    <p class="status1">Status: {{ task.status }}</p>
+    {% endif %}
+
+
 
     <p>Priority: {{ task.priority }}</p>
 

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Add new task</h1>
+<form method="POST" action="{{url_for('taskadd')}}">
+    <label> Title:</label>
+    <input type="text" name="title" required> {#tells flask what key to use when retrieving the submitted value.#}
+    <br><br>
+    <label> Description:</label>
+    <input type="text" name="description" required>
+    <br><br>
+    <label> Status:</label>
+    <select name="status">
+        <option value="Completed">Completed</option>
+        <option value="Pending">Pending</option>
+    </select>
+    <label> Priority:</label>
+    <select name="priority">
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+    </select>
+    <br><br>
+    <button type="submit">save task</button>
+</form>
+{% endblock  %}

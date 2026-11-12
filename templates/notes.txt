@@ -68,3 +68,11 @@ That's why your HTML can use:
 {% for task in tasks %}
     {{ task.title }}
 {% endfor %}
+
+---------------------------
+<input name="title"> User types: Learn Django
+title = request.form.get("title") Python receives: "Learn Django"
+new_task = {"title": title}
+name="title" belongs to HTML.
+title in request.form.get("title") is the HTML field name.
+The first title in title = ... is a Python variable that you create.
