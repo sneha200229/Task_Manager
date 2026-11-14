@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {%block content%}
+<br>
 <h2>Welcome to all tasks page</h2>
 {% for task in tasks %}
 
@@ -22,7 +23,14 @@
     <a href="{{ url_for('show_task_byid', id=task.id) }}">
         View Details
     </a>
-
+    <br><br>
+    <a href="{{ url_for('editTask', id=task.id) }}">
+    <button type="button">Edit task</button>
+</a>
+<br><br>
+   <a href="{{ url_for('deleteTask', id=task.id) }}">
+    <button type="button" style="background-color:red">Delete task</button>
+</a>
 </div>
 
 {% endfor %}

@@ -90,5 +90,23 @@ def taskadd():
         return redirect(url_for("show_tasks"))
     return render_template("add_task.html")
 
+@app.route("/tasks/<int:id>/edit", methods=['GET','POST'])
+def editTask(id):
+    task = next((t for t in tasks if t["id"] == id), None)
+    if task is None:
+        return "Task not found", 404
+    if request.method=="POST":
+       task["description"]=request.form.get("description")
+       task["status"]=request.form.get("status")
+       task["priority"]==request.form.get("priority")
+       return redirect(url_for("show_tasks"))
+    return render_template("editTask.html",task=task)
+       
+@app.route("/tasks/<int:id>/delete", methods=['GET','POST'])
+def deleteTask(id):
+    global tasks
+    tasks=[task for task in tasks if task["id"]!=id]
+    return redirect(url_for("show_tasks"))
+ 
 if __name__=="__main__":
     app.run(debug=True,port=5002)
